@@ -1,9 +1,10 @@
 class OrdersController < ApplicationController
 
   include CurrentCart
+
   before_action :set_cart, only: [:new, :create]
   before_action :ensure_cart_isnt_empty, only: :new
-  before_action :set_order, only: %i[ show edit update destroy ]
+  before_action :set_order, only: [ :show, :edit, :update, :destroy ]
 
   # GET /orders or /orders.json
   def index
@@ -29,9 +30,7 @@ class OrdersController < ApplicationController
     @order.add_line_items_from_cart(@cart)
 
     respond_to do |format|
-      if @order.save
-        # format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
-        
+      if @order.save        
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
         format.html { redirect_to store_index_url, notice: 'Thank you for your order.'}
@@ -61,7 +60,7 @@ class OrdersController < ApplicationController
     @order.destroy
 
     respond_to do |format|
-      format.html { redirect_to orders_url, notice: "Order was successfully destroyed." }
+      format.html { redirect_to store_index_url, notice: "Order was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -72,9 +71,6 @@ class OrdersController < ApplicationController
       if @cart.line_items.empty?
         redirect_to store_index_url, notice: 'Your cart is empty'
       end
-
-      # redirect_to store_index_url, notice: 'Your cart is empty' if @cart.line_items.empty
-
     end
 
 

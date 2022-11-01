@@ -1,23 +1,24 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
 
-  # GET /products or /products.json
-  def index
-    @products = Product.all.order(:title)
-  end
+      # GET /products or /products.json
+      def index
+        @products = Product.all.order(:title)
+      end
 
-  # GET /products/1 or /products/1.json
-  def show
-  end
 
-  # GET /products/new
-  def new
-    @product = Product.new
-  end
+      # GET /products/1 or /products/1.json
+      def show
+      end
 
-  # GET /products/1/edit
-  def edit
-  end
+      # GET /products/new
+      def new
+        @product = Product.new
+      end
+
+      # GET /products/1/edit
+      def edit
+      end
 
   # POST /products or /products.json
   def create
@@ -35,6 +36,7 @@ class ProductsController < ApplicationController
     end
   end
 
+
   # PATCH/PUT /products/1 or /products/1.json
   def update
     respond_to do |format|
@@ -50,6 +52,7 @@ class ProductsController < ApplicationController
       end
     end
   end
+  
 
   # DELETE /products/1 or /products/1.json
   def destroy
@@ -61,6 +64,7 @@ class ProductsController < ApplicationController
     end
   end
 
+
     def who_bought
       @product = Product.find(parms[:id])
       @latest_order = @product.orders.order(:updated_at).last
@@ -70,7 +74,7 @@ class ProductsController < ApplicationController
         end
       end
     end
-  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
